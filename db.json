@@ -1,0 +1,31 @@
+{
+  "events": [
+    {
+      "title": "Come learn about International Crypto Tax Laws!",
+      "date": "10/31/2021 ",
+      "city": "Lisbon",
+      "location": "Porta Bello' Bar",
+      "details": "Partnering with Nomad Capital we are hosting a live event with one of our CPA that focuses on US and UK tax laws. ",
+      "host": "Business",
+      "id": 1
+    },
+    {
+      "title": "All about up and coming HOT SPOTS!",
+      "date": "11/08/2021",
+      "city": "Tblisi",
+      "location": "Near old town, Takzle Square Restaurant ",
+      "details": "Look to meet and talk about your favorite expat communities and which Cities will be the next Chiang Mai! ",
+      "host": "Guest",
+      "id": 2
+    },
+    {
+      "title": "Ironhack Hackathon",
+      "date": "11/02/2021",
+      "city": "MIAMI",
+      "location": "Brickell City Center @ Building Co.",
+      "details": "Come and Networking with like minded remote workers! This Friday at 7pm EST. We will have guest speakers and more!",
+      "host": "Member",
+      "id": 3
+    }
+  ]
+}
