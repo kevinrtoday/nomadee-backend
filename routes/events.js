@@ -1,59 +1,70 @@
-// const express = require("express");
-// const Event = require("../models/event");
-// const router = express.Router();
+const express = require("express");
+const event = require("../models/Event");
+const router = express.Router();
 
-// router.get("/new", (req, res) => {
-//   res.render("events/new", { Event: new Event() });
-// });
+// GET all
+router.get("/", async (req, res) => {
+  const events = await event.find();
+  try {
+    return res.status(200).json(events);
+  } catch (error) {
+    return res.status(500).json({ message: "Error couldn't get the prodcuts" });
+  }
+});
 
-// router.get("/edit/:id", async (req, res) => {
-//   const event = await Event.findById(req.params.id);
-//   res.render("events/edit", { event: event });
-// });
+// GET Singleevent
+router.get("/event/:id", async (req, res) => {
+  const { id } = req.params;
+  const singleevent = await event
+    .findById(id)
+    .populate("title", "city", "location", "details", "host", "date");
+  try {
+    return res.status(200).json(singleevent);
+  } catch (error) {
+    return res.status(500).json({ message: "Couldn't not get the event" });
+  }
+});
 
-// router.get("/:slug", async (req, res) => {
-//   const Event = await Event.findOne({ slug: req.params.slug });
-//   if (Event == null) res.redirect("/");
-//   res.render("Events/show", { Event: Event });
-// });
+// POST event
+router.post("/event", async (req, res) => {
+  const eventToCreate = await event.create(req.body);
+  try {
+    return res.status(201).json(eventToCreate);
+  } catch (error) {
+    return res.status(500).json({ message: "Could not create the event" });
+  }
+});
 
-// router.post(
-//   "/",
-//   async (req, res, next) => {
-//     req.Event = new Event();
-//     next();
-//   },
-//   saveEventAndRedirect("new")
-// );
+// POST imageUpload
+router.post("/event/imageUpload/:id", async (req, res) => {
+  const { id } = req.params;
+  const eventToUpdate = await event.findById(id);
+});
 
-// router.put(
-//   "/:id",
-//   async (req, res, next) => {
-//     req.Event = await Event.findById(req.params.id);
-//     next();
-//   },
-//   saveEventAndRedirect("edit")
-// );
+// PUT event
+router.put("/event/:id", async (req, res) => {
+  const { id } = req.params;
+  const eventToUpdate = await event.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
+  try {
+    return res.status(202).json(eventToUpdate);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Couldn't update event, check the server" });
+  }
+});
 
-// router.delete("/:id", async (req, res) => {
-//   await Event.findByIdAndDelete(req.params.id);
-//   res.redirect("/");
-// });
+// DELETE event
+router.delete("/event/:id", async (req, res) => {
+  const { id } = req.params;
+  await event.findByIdAndDelete(id);
+  try {
+    return res.json({ message: "event successfully deleted" });
+  } catch (error) {
+    return res.status(500).json({ message: "ERROR could not delete event" });
+  }
+});
 
-// function saveEventAndRedirect(path) {
-//   return async (req, res) => {
-//     let Event = req.Event;
-//     Event.title = req.body.title;
-//     Event.description = req.body.description;
-//     Event.location = req.body.location;
-//     Event.city = req.body.city;
-//     try {
-//       Event = await Event.save();
-//       res.redirect(`/Events/${Event.slug}`);
-//     } catch (e) {
-//       res.render(`Events/${path}`, { Event: Event });
-//     }
-//   };
-// }
-
-// module.exports = router;
+module.exports = router;

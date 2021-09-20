@@ -6,7 +6,7 @@ const EventSchema = Schema({
     required: [true, "title field is required"],
   },
   date: {
-    type: Number,
+    type: Date,
     required: [true, "date field is required"],
   },
   city: {
@@ -29,4 +29,4 @@ const EventSchema = Schema({
   img: { type: String },
 });
 
-module.exports = model("Events", EventSchema);
+module.exports = model("Event", EventSchema);
